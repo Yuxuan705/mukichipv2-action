@@ -22,8 +22,8 @@
     /* 全局配色变量 */
     :root {
       --bg-color: #ffffff;        /* 整体背景颜色：纯白 */
-      --main-brown: #926653;      /* 指定褐色文字颜色 */
-      --accent-orange: #EEA445;   /* 指定橙色文字与线条颜色 */
+      --main-brown: #926653;      /* 褐色文字颜色 */
+      --accent-orange: #EEA445;   /* 橙色文字与线条颜色 */
       --card-bg: #F8F6F3;        /* 展示卡片背景颜色 */
     }
 
@@ -64,77 +64,116 @@
       letter-spacing: 0.05em; /* 字间距 +50 */
       text-transform: uppercase;
       margin-top: 5px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       text-align: center;
     }
 
-    /* 2. 5 只漂浮透明鬼的容器 */
-    .ghosts-container {
+    /* 2. 顶部的 1-6 点数规则对照图/卡片 */
+    .rules-card {
       width: 100%;
-      height: 130px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      position: relative;
-      margin-bottom: 10px;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 15px;
     }
 
-    /* 小鬼 PNG 图片样式与漂浮动画 */
-    .ghost-item {
-      width: 52px;
-      height: auto;
+    .rules-title {
+      font-family: 'Bagel Fat One', cursive, sans-serif;
+      font-size: 14px;
+      color: var(--accent-orange);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px 12px;
+      font-family: 'Liyu Shoushu', cursive, sans-serif;
+      font-size: 13px;
+      color: var(--main-brown);
+      text-align: left;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .rule-num {
+      font-family: 'Bagel Fat One', cursive, sans-serif;
+      color: var(--accent-orange);
+      font-size: 14px;
+    }
+
+    /* 3. 中间摇骰子区域 */
+    .dice-area {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0 18px;
       cursor: pointer;
-      filter: drop-shadow(0 4px 6px rgba(146, 102, 83, 0.15));
-      transition: transform 0.2s ease;
+    }
+
+    /* 骰子外观 (可改用 dice.png，默认用立体 CSS 骰子) */
+    .dice-box {
+      width: 85px;
+      height: 85px;
+      background-color: var(--card-bg);
+      border: 3px solid var(--main-brown);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bagel Fat One', cursive, sans-serif;
+      font-size: 42px;
+      color: var(--accent-orange);
+      box-shadow: 0 8px 0px var(--main-brown);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
       user-select: none;
     }
 
-    /* 错落有致的上下上下上下漂浮 animation */
-    .ghost-1 { animation: floatGhost 3.0s ease-in-out infinite 0s; }
-    .ghost-2 { animation: floatGhost 3.4s ease-in-out infinite 0.5s; }
-    .ghost-3 { animation: floatGhost 2.8s ease-in-out infinite 1.0s; }
-    .ghost-4 { animation: floatGhost 3.2s ease-in-out infinite 0.3s; }
-    .ghost-5 { animation: floatGhost 2.9s ease-in-out infinite 0.8s; }
-
-    @keyframes floatGhost {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-12px) rotate(3deg);
-      }
+    .dice-box:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0px var(--main-brown);
     }
 
-    /* 点击小鬼时的弹跳反馈 */
-    .ghost-item:active {
-      transform: scale(0.75) !important;
+    /* 摇骰子动画 */
+    .dice-box.rolling {
+      animation: rollDice 1.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    /* 3. Action 展示卡片 */
+    @keyframes rollDice {
+      0% { transform: rotate(0deg) scale(1); }
+      20% { transform: rotate(-25deg) scale(1.1) translateY(-10px); }
+      40% { transform: rotate(30deg) scale(0.9) translateY(5px); }
+      60% { transform: rotate(-15deg) scale(1.05); }
+      80% { transform: rotate(10deg) scale(0.98); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    /* 4. Action 结果展示卡片 */
     .action-card {
       width: 100%;
       background-color: var(--card-bg);
       border-radius: 20px;
-      padding: 20px 18px 22px;
+      padding: 18px 18px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
     }
 
-    /* 滚动抽签时的模糊与淡化效果 */
-    .action-card.rolling .answer-container {
-      filter: blur(1px);
-      opacity: 0.7;
-    }
-
-    /* - ACTION SOLVER - 标头 */
     .card-header-title {
       font-family: 'Bagel Fat One', cursive, sans-serif;
       font-size: 18px;
       color: var(--accent-orange);
       letter-spacing: 0.05em; /* 字间距 +50 */
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-transform: uppercase;
     }
 
@@ -143,7 +182,7 @@
       width: 100%;
       height: 1px;
       background-color: var(--accent-orange);
-      margin: 6px 0 10px;
+      margin: 6px 0;
       opacity: 0.5;
     }
 
@@ -154,13 +193,13 @@
       font-size: 14px;
       color: var(--main-brown);
       letter-spacing: 0.05em;
-      margin-bottom: 6px;
+      margin: 2px 0;
       text-transform: uppercase;
       text-align: left;
       padding: 0 8px;
     }
 
-    /* 4. 答案显示区域 (靠左对齐) */
+    /* 答案显示区域 (靠左对齐) */
     .answer-container {
       width: 100%;
       padding: 10px 8px;
@@ -168,8 +207,7 @@
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      min-height: 100px;
-      transition: opacity 0.1s ease;
+      min-height: 90px;
     }
 
     /* 中文答案 (靠左对齐，Liyu Shoushu 字体) */
@@ -179,7 +217,7 @@
       color: var(--main-brown);
       font-size: 18pt;
       line-height: 1.35;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       word-break: break-word;
       text-align: left;
     }
@@ -196,7 +234,7 @@
       text-align: left;
     }
 
-    /* 5. 底部抱着电脑想死的 Muki 插图 */
+    /* 5. 底部 Muki 插图 + IG 印章 */
     .muki-laptop-wrapper {
       width: 100%;
       display: flex;
@@ -207,15 +245,15 @@
 
     .muki-laptop-img {
       width: 100%;
-      max-width: 260px;
+      max-width: 240px;
       height: auto;
       display: block;
     }
 
-    /* 6. 右下角/底部的 Instagram 印章按钮 */
+    /* 印章按钮 */
     .stamp-link {
       position: absolute;
-      bottom: -15px;
+      bottom: -10px;
       right: 5px;
       text-decoration: none;
       z-index: 10;
@@ -239,7 +277,7 @@
       font-size: 12px;
       color: var(--main-brown);
       letter-spacing: 0.05em; /* 字间距 +50 */
-      margin-top: 25px;
+      margin-top: 22px;
       opacity: 0.5;
       cursor: pointer;
       user-select: none;
@@ -253,33 +291,42 @@
     <!-- 1. 主标题 -->
     <h1 class="main-title">MUKICHIP V2: DAILY SOLVER</h1>
 
-    <!-- 2. 5 只悬浮的透明小鬼 (点击任意一只触发抽签) -->
-    <div class="ghosts-container">
-      <img src="ghost-1.png" alt="Ghost 1" class="ghost-item ghost-1" onclick="triggerAction()" onerror="this.src='https://via.placeholder.com/52x60/926653/FFFFFF?text=👻1'">
-      <img src="ghost-2.png" alt="Ghost 2" class="ghost-item ghost-2" onclick="triggerAction()" onerror="this.src='https://via.placeholder.com/52x60/EEA445/FFFFFF?text=👻2'">
-      <img src="ghost-3.png" alt="Ghost 3" class="ghost-item ghost-3" onclick="triggerAction()" onerror="this.src='https://via.placeholder.com/52x60/926653/FFFFFF?text=👻3'">
-      <img src="ghost-4.png" alt="Ghost 4" class="ghost-item ghost-4" onclick="triggerAction()" onerror="this.src='https://via.placeholder.com/52x60/EEA445/FFFFFF?text=👻4'">
-      <img src="ghost-5.png" alt="Ghost 5" class="ghost-item ghost-5" onclick="triggerAction()" onerror="this.src='https://via.placeholder.com/52x60/926653/FFFFFF?text=👻5'">
+    <!-- 2. 1-6 点数规则对照表 -->
+    <div class="rules-card">
+      <div class="rules-title">- DICE RULEBOOK -</div>
+      <div class="rules-grid">
+        <div class="rule-item"><span class="rule-num">1:</span> 绝不强求 (NO)</div>
+        <div class="rule-item"><span class="rule-num">2:</span> 换个环境 (MOVE)</div>
+        <div class="rule-item"><span class="rule-num">3:</span> 2分钟微行动</div>
+        <div class="rule-item"><span class="rule-num">4:</span> 先做烂版本</div>
+        <div class="rule-item"><span class="rule-num">5:</span> 倒数 321 发射</div>
+        <div class="rule-item"><span class="rule-num">6:</span> 立刻去做！(GO)</div>
+      </div>
     </div>
 
-    <!-- 3. Action 结果展示卡片 -->
-    <div class="action-card" id="actionCard">
+    <!-- 3. 摇骰子交互区域 -->
+    <div class="dice-area" onclick="rollDice()">
+      <div class="dice-box" id="diceDisplay">6</div>
+    </div>
+
+    <!-- 4. Action 结果展示卡片 -->
+    <div class="action-card">
       <div class="card-header-title">- ACTION SOLVER -</div>
       
       <div class="divider-line"></div>
       <div class="question-prompt">TO DO OR NOT TO DO?</div>
       <div class="divider-line"></div>
 
-      <!-- 答案核心展示区 (靠左对齐，Liyu Shoushu 字体) -->
+      <!-- 答案展示区 (靠左对齐，Liyu Shoushu 字体) -->
       <div class="answer-container">
-        <p class="zh-text" id="zhDisplay">阻力太大？只做 2 分钟！2分钟后随时可以停！</p>
-        <p class="en-text" id="enDisplay">TOO HARD? DO IT FOR 2 MINUTES ONLY, THEN STOP ANYTIME!</p>
+        <p class="zh-text" id="zhDisplay">天选 6 号！别犹豫了，现在就去把它干掉！！</p>
+        <p class="en-text" id="enDisplay">LUCKY SIX! STOP THINKING AND DO IT RIGHT NOW!!</p>
       </div>
     </div>
 
-    <!-- 4. 底部抱着电脑想死的 Muki + IG 印章 -->
+    <!-- 5. 底部 Muki 插图 + IG 印章 -->
     <div class="muki-laptop-wrapper">
-      <img src="muki-laptop.png" alt="Exhausted Muki with Laptop" class="muki-laptop-img" onerror="this.src='https://via.placeholder.com/260x120/F8F6F3/926653?text=MUKI+LAPTOP+PNG'">
+      <img src="muki-laptop.png" alt="Muki Illustration" class="muki-laptop-img" onerror="this.src='https://via.placeholder.com/240x110/F8F6F3/926653?text=MUKI+ILLUSTRATION'">
       
       <!-- Instagram 印章按钮 -->
       <a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="stamp-link">
@@ -287,132 +334,79 @@
       </a>
     </div>
 
-    <!-- 底部重抽提示 -->
-    <div class="tap-tip" onclick="triggerAction()">[ 戳一戳小鬼 / TAP A GHOST TO SOLVE ]</div>
+    <!-- 底部点击提示 -->
+    <div class="tap-tip" onclick="rollDice()">[ 摇摇骰子 / ROLL THE DICE ]</div>
 
   </div>
 
   <script>
     /* ========================================================
-       ACTION 破除拖延/行动决策数据池 (40 项)
+       1-6 骰子结果映射表
        ======================================================== */
-    const actionDecisions = [
-      {
+    const diceDecisions = {
+      1: {
+        zh: "今天算了！神仙来了也别做，果断去休息摆烂！",
+        en: "HARD NO TODAY! FORGIVE YOURSELF AND GO REST!"
+      },
+      2: {
+        zh: "别卡在桌前发呆！换去床边、沙发或咖啡馆做！",
+        en: "DON'T STARE AT YOUR DESK! MOVE TO A CAFE OR BED!"
+      },
+      3: {
         zh: "阻力太大？只做 2 分钟！2分钟后随时可以停！",
-        en: "TOO HARD? DO IT FOR 2 MINUTES ONLY, THEN STOP ANYTIME!"
+        en: "TOO HARD? DO IT FOR 2 MINUTES ONLY, THEN STOP!"
       },
-      {
-        zh: "别想了！脑子在骗你，但手脚已经准备好了，立刻开始！",
-        en: "STOP THINKING! YOUR BRAIN IS LYING, START RIGHT NOW!"
-      },
-      {
-        zh: "今天真的没能量，果断放过自己去休息！",
-        en: "OUT OF ENERGY TODAY! FORGIVE YOURSELF AND GO REST!"
-      },
-      {
+      4: {
         zh: "先做最烂的版本出来！先完成，再完美！",
         en: "MAKE A TERRIBLE DRAFT FIRST! DONE IS BETTER THAN PERFECT!"
       },
-      {
-        zh: "别卡在桌子前发呆了！换去咖啡馆或者床上做！",
-        en: "DON'T STARED AT YOUR DESK! MOVE TO A CAFE OR BED!"
-      },
-      {
-        zh: "关掉所有社交软件 15 分钟，专注搞定第一步！",
-        en: "CLOSE SOCIAL MEDIA FOR 15 MINS, FOCUS ON STEP ONE!"
-      },
-      {
-        zh: "这件事根本不重要！直接从清单划掉，去睡觉！",
-        en: "THIS DOESN'T MATTER! CROSS IT OFF AND GO TO SLEEP!"
-      },
-      {
+      5: {
         zh: "倒数 3、2、1，像发射火箭一样立刻站起来！",
         en: "COUNTDOWN 3, 2, 1, STAND UP LIKE A ROCKET LAUNCH!"
       },
-      {
-        zh: "去洗个脸、喝口水，10 分钟后回来再战！",
-        en: "WASH YOUR FACE, DRINK WATER, COME BACK IN 10 MINS!"
-      },
-      {
-        zh: "把它拆成三个极小的小步，只做第一步！",
-        en: "BREAK IT INTO 3 TINY STEPS, DO ONLY THE FIRST ONE!"
-      },
-      {
-        zh: "把手机放到拿不到的地方，现在就开始！",
-        en: "PUT YOUR PHONE OUT OF REACH, START RIGHT NOW!"
-      },
-      {
-        zh: "小鬼看穿你了！你只是太累了，今天不做！",
-        en: "GHOST SEES YOU! YOU'RE JUST TIRED, SKIP IT TODAY!"
-      },
-      {
-        zh: "放一首最热血的音乐，跟着节奏做起来！",
-        en: "PLAY YOUR FAVORITE BANGER AND GET MOVIN'!"
-      },
-      {
-        zh: "找个同伴监督你，做不完请他喝奶茶！",
-        en: "FIND A FRIEND TO SUPERVISE YOU, BUY THEM BOBA IF UNFINISHED!"
-      },
-      {
-        zh: "做完这件事，你就可以肆无忌惮地摆烂了！",
-        en: "FINISH THIS AND YOU CAN LAZE AROUND GUILT-FREE!"
-      },
-      {
-        zh: "不要准备了！最好的准备就是直接开始！",
-        en: "STOP PREPARING! THE BEST PREPARATION IS STARTING!"
-      },
-      {
-        zh: "今天不适合硬撑，放手去吃顿好的！",
-        en: "DON'T FORCE IT TODAY. GO ENJOY A GOOD MEAL INSTEAD!"
-      },
-      {
-        zh: "给自己设定一个 25 分钟番茄钟，响了就停！",
-        en: "SET A 25-MIN TIMER. STOP IMMEDIATELY WHEN IT RINGS!"
-      },
-      {
-        zh: "这件事其实只需 5 分钟，别在脑子里折磨自己了！",
-        en: "IT ONLY TAKES 5 MINS, STOP TORTURING YOUR BRAIN!"
-      },
-      {
-        zh: "相信你的直觉，现在就去把它干掉！",
-        en: "TRUST YOUR GUT, GO SLAY IT RIGHT NOW!"
+      6: {
+        zh: "天选 6 号！别犹豫了，现在就去把它干掉！！",
+        en: "LUCKY SIX! STOP THINKING AND DO IT RIGHT NOW!!"
       }
-    ];
+    };
 
     /* ========================================================
-       2 秒滚动抽签逻辑 (点击小鬼触发)
+       摇骰子动画与随机数逻辑
        ======================================================== */
     let isRolling = false;
 
-    function triggerAction() {
+    function rollDice() {
       if (isRolling) return;
       isRolling = true;
 
-      const actionCard = document.getElementById('actionCard');
+      const diceDisplay = document.getElementById('diceDisplay');
       const zhDisplay = document.getElementById('zhDisplay');
       const enDisplay = document.getElementById('enDisplay');
 
-      actionCard.classList.add('rolling');
+      // 触发摇动动画
+      diceDisplay.classList.remove('rolling');
+      void diceDisplay.offsetWidth; // 触发 reflow
+      diceDisplay.classList.add('rolling');
 
-      const duration = 1500;    // 1.5 秒
-      const intervalTime = 60;  // 60ms 快速交替
+      const duration = 1500;   // 1.5 秒动画
+      const intervalTime = 70; // 快速变动数字
       let elapsedTime = 0;
 
       const timer = setInterval(() => {
-        const tempIndex = Math.floor(Math.random() * actionDecisions.length);
-        zhDisplay.textContent = actionDecisions[tempIndex].zh;
-        enDisplay.textContent = actionDecisions[tempIndex].en;
+        const tempNum = Math.floor(Math.random() * 6) + 1;
+        diceDisplay.textContent = tempNum;
 
         elapsedTime += intervalTime;
 
         if (elapsedTime >= duration) {
           clearInterval(timer);
           
-          const finalIndex = Math.floor(Math.random() * actionDecisions.length);
-          zhDisplay.textContent = actionDecisions[finalIndex].zh;
-          enDisplay.textContent = actionDecisions[finalIndex].en;
+          // 确定最终落点
+          const finalNum = Math.floor(Math.random() * 6) + 1;
+          diceDisplay.textContent = finalNum;
+          zhDisplay.textContent = diceDecisions[finalNum].zh;
+          enDisplay.textContent = diceDecisions[finalNum].en;
 
-          actionCard.classList.remove('rolling');
           isRolling = false;
         }
       }, intervalTime);
