@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -21,10 +21,10 @@
 
     /* 全局配色变量 */
     :root {
-      --bg-color: #ffffff;        /* 整体背景颜色：纯白 */
-      --main-brown: #926653;      /* 褐色文字颜色 */
-      --accent-orange: #EEA445;   /* 橙色文字与线条颜色 */
-      --card-bg: #F8F6F3;        /* 展示卡片背景颜色 */
+      --bg-color: #ffffff;        /* 整体背景：纯白 */
+      --main-brown: #926653;      /* 褐色 */
+      --accent-orange: #EEA445;   /* 橙色 */
+      --card-bg: #F8F6F3;        /* 展示卡片背景 */
     }
 
     * {
@@ -56,7 +56,7 @@
       position: relative;
     }
 
-    /* 1. 主标题 */
+    /* 1. 主标题 (Bagel Fat One Regular, 字间距 +50) */
     .main-title {
       font-family: 'Bagel Fat One', cursive, sans-serif;
       font-size: 20px;
@@ -64,108 +64,50 @@
       letter-spacing: 0.05em; /* 字间距 +50 */
       text-transform: uppercase;
       margin-top: 5px;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-
-    /* 2. 顶部的 1-6 点数规则对照表 */
-    .rules-card {
-      width: 100%;
-      background-color: var(--card-bg);
-      border-radius: 16px;
-      padding: 12px 14px;
       margin-bottom: 15px;
-    }
-
-    .rules-title {
-      font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 14px;
-      color: var(--accent-orange);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
       text-align: center;
     }
 
-    .rules-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px 12px;
-      font-family: 'Liyu Shoushu', cursive, sans-serif;
-      font-size: 13px;
-      color: var(--main-brown);
-      text-align: left;
-    }
-
-    .rule-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .rule-num {
-      font-family: 'Bagel Fat One', cursive, sans-serif;
-      color: var(--accent-orange);
-      font-size: 14px;
-    }
-
-    /* 3. 中间摇骰子区域 */
-    .dice-area {
+    /* 2. 盖印章按压互动区 */
+    .stamp-interactive-area {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 10px 0 18px;
+      margin-bottom: 15px;
       cursor: pointer;
     }
 
-    /* 骰子外观 */
-    .dice-box {
-      width: 85px;
-      height: 85px;
-      background-color: var(--card-bg);
-      border: 3px solid var(--main-brown);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 42px;
-      color: var(--accent-orange);
-      box-shadow: 0 8px 0px var(--main-brown);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    .stamp-handle-img {
+      width: 90px;
+      height: auto;
+      display: block;
+      transition: transform 0.1s ease;
       user-select: none;
     }
 
-    .dice-box:active {
-      transform: translateY(4px);
-      box-shadow: 0 4px 0px var(--main-brown);
+    /* 点击按压“啪嗒”动画 */
+    .stamp-interactive-area.pressing .stamp-handle-img {
+      animation: stampPress 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    /* 摇骰子动画 */
-    .dice-box.rolling {
-      animation: rollDice 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    @keyframes stampPress {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(12px) scale(0.85) rotate(-3deg); }
+      100% { transform: translateY(0) scale(1); }
     }
 
-    @keyframes rollDice {
-      0% { transform: rotate(0deg) scale(1); }
-      20% { transform: rotate(-25deg) scale(1.1) translateY(-10px); }
-      40% { transform: rotate(30deg) scale(0.9) translateY(5px); }
-      60% { transform: rotate(-15deg) scale(1.05); }
-      80% { transform: rotate(10deg) scale(0.98); }
-      100% { transform: rotate(0deg) scale(1); }
-    }
-
-    /* 4. Action 结果展示卡片 */
+    /* 3. Action 展示卡片 */
     .action-card {
       width: 100%;
       background-color: var(--card-bg);
       border-radius: 20px;
-      padding: 16px 18px 20px;
+      padding: 20px 18px 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
+      overflow: hidden;
     }
 
     /* 细线分割线 */
@@ -190,43 +132,63 @@
       padding: 0 8px;
     }
 
-    /* 答案显示区域 (靠左对齐) */
-    .answer-container {
+    /* 4. 印章落印显示区 (靠左对齐) */
+    .stamp-result-container {
       width: 100%;
-      padding: 10px 8px;
+      padding: 12px 8px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      min-height: 90px;
+      min-height: 120px;
+      position: relative;
     }
 
-    /* 中文答案 (靠左对齐，Liyu Shoushu 字体) */
-    .zh-text {
+    /* 盖下的 Muki 印章 PNG */
+    .muki-stamp-mark {
+      width: 110px;
+      height: auto;
+      margin-bottom: 8px;
+      display: block;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .muki-stamp-mark.pop {
+      animation: stampPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes stampPop {
+      0% { transform: scale(2) rotate(-10deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    /* 英文主文案 (大字，Bagel Fat One Regular) */
+    .en-stamp-title {
       width: 100%;
-      font-family: 'Liyu Shoushu', cursive, sans-serif;
-      color: var(--main-brown);
-      font-size: 18pt;
-      line-height: 1.35;
+      font-family: 'Bagel Fat One', cursive, sans-serif;
+      color: var(--accent-orange);
+      font-size: 20px;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
       margin-bottom: 4px;
-      word-break: break-word;
+      text-transform: uppercase;
       text-align: left;
     }
 
-    /* 英文答案 (靠左对齐，Liyu Shoushu 字体) */
-    .en-text {
+    /* 英文描述/中文辅助 (小字，Liyu Shoushu 字体) */
+    .sub-text {
       width: 100%;
       font-family: 'Liyu Shoushu', cursive, sans-serif;
       color: var(--main-brown);
-      font-size: 11px;
-      line-height: 1.3;
+      font-size: 13px;
+      line-height: 1.35;
       text-transform: uppercase;
       word-break: break-word;
       text-align: left;
     }
 
     /* 5. 底部 Muki 插图 + IG 印章 */
-    .muki-laptop-wrapper {
+    .muki-bottom-wrapper {
       width: 100%;
       display: flex;
       justify-content: center;
@@ -234,14 +196,14 @@
       position: relative;
     }
 
-    .muki-laptop-img {
+    .muki-bottom-img {
       width: 100%;
       max-width: 240px;
       height: auto;
       display: block;
     }
 
-    /* 印章按钮 */
+    /* IG 印章按钮 */
     .stamp-link {
       position: absolute;
       bottom: -10px;
@@ -282,40 +244,30 @@
     <!-- 1. 主标题 -->
     <h1 class="main-title">MUKICHIP V2: DAILY SOLVER</h1>
 
-    <!-- 2. 1-6 点数规则对照表 -->
-    <div class="rules-card">
-      <div class="rules-title">- DICE RULEBOOK -</div>
-      <div class="rules-grid">
-        <div class="rule-item"><span class="rule-num">1:</span> 绝不强求 (NO)</div>
-        <div class="rule-item"><span class="rule-num">2:</span> 换个环境 (MOVE)</div>
-        <div class="rule-item"><span class="rule-num">3:</span> 2分钟微行动</div>
-        <div class="rule-item"><span class="rule-num">4:</span> 先做烂版本</div>
-        <div class="rule-item"><span class="rule-num">5:</span> 倒数 321 发射</div>
-        <div class="rule-item"><span class="rule-num">6:</span> 立刻去做！(GO)</div>
-      </div>
+    <!-- 2. 印章按压交互图 (自行替换为 stamp-handle.png) -->
+    <div class="stamp-interactive-area" id="stampArea" onclick="pressStamp()">
+      <img src="stamp-handle.png" alt="Stamp Handle" class="stamp-handle-img" id="stampHandle" onerror="this.src='https://via.placeholder.com/90x90/926653/FFFFFF?text=STAMP+PNG'">
     </div>
 
-    <!-- 3. 摇骰子交互区域 -->
-    <div class="dice-area" onclick="rollDice()">
-      <div class="dice-box" id="diceDisplay">6</div>
-    </div>
-
-    <!-- 4. Action 结果展示卡片 -->
+    <!-- 3. Action 结果展示卡片 -->
     <div class="action-card">
       <div class="divider-line"></div>
       <div class="question-prompt">TO DO OR NOT TO DO?</div>
       <div class="divider-line"></div>
 
-      <!-- 答案展示区 (靠左对齐，Liyu Shoushu 字体) -->
-      <div class="answer-container">
-        <p class="zh-text" id="zhDisplay">天选 6 号！别犹豫了，现在就去把它干掉！！</p>
-        <p class="en-text" id="enDisplay">LUCKY SIX! STOP THINKING AND DO IT RIGHT NOW!!</p>
+      <!-- 印章落印与文案展示区 (靠左对齐) -->
+      <div class="stamp-result-container">
+        <!-- 动态改变的 Muki 印章图案 (如 stamp-muki-1.png ~ stamp-muki-6.png) -->
+        <img src="stamp-muki-1.png" alt="Muki Stamp Mark" class="muki-stamp-mark" id="stampMark" onerror="this.src='https://via.placeholder.com/110x50/EEA445/FFFFFF?text=STAMP+MARK'">
+        
+        <div class="en-stamp-title" id="enTitle">DO IT NOW!!</div>
+        <div class="sub-text" id="subText">Stop thinking and do it right now!</div>
       </div>
     </div>
 
-    <!-- 5. 底部 Muki 插图 + IG 印章 -->
-    <div class="muki-laptop-wrapper">
-      <img src="muki-laptop.png" alt="Muki Illustration" class="muki-laptop-img" onerror="this.src='https://via.placeholder.com/240x110/F8F6F3/926653?text=MUKI+ILLUSTRATION'">
+    <!-- 4. 底部 Muki 插图 + IG 印章 -->
+    <div class="muki-bottom-wrapper">
+      <img src="action-muki.png" alt="Muki Illustration" class="muki-bottom-img" onerror="this.src='https://via.placeholder.com/240x110/F8F6F3/926653?text=MUKI+ILLUSTRATION'">
       
       <!-- Instagram 印章按钮 -->
       <a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="stamp-link">
@@ -324,81 +276,84 @@
     </div>
 
     <!-- 底部点击提示 -->
-    <div class="tap-tip" onclick="rollDice()">[ 摇摇骰子 / ROLL THE DICE ]</div>
+    <div class="tap-tip" onclick="pressStamp()">[ 点击盖章 / STAMP HERE ]</div>
 
   </div>
 
   <script>
     /* ========================================================
-       1-6 骰子结果映射表
+       印章数据池 (可以配置你的 6 个或更多 Muki 印章图片与英文文案)
        ======================================================== */
-    const diceDecisions = {
-      1: {
-        zh: "今天算了！神仙来了也别做，果断去休息摆烂！",
-        en: "HARD NO TODAY! FORGIVE YOURSELF AND GO REST!"
+    const actionStamps = [
+      {
+        img: "stamp-muki-1.png",
+        title: "DO IT NOW!!",
+        sub: "Stop thinking and start right now!"
       },
-      2: {
-        zh: "别卡在桌前发呆！换去床边、沙发或咖啡馆做！",
-        en: "DON'T STARE AT YOUR DESK! MOVE TO A CAFE OR BED!"
+      {
+        img: "stamp-muki-2.png",
+        title: "STAMP AGAIN!",
+        sub: "The universe needs a second thought."
       },
-      3: {
-        zh: "阻力太大？只做 2 分钟！2分钟后随时可以停！",
-        en: "TOO HARD? DO IT FOR 2 MINUTES ONLY, THEN STOP!"
+      {
+        img: "stamp-muki-3.png",
+        title: "SLACK OFF TODAY",
+        sub: "Forgive yourself and go rest completely!"
       },
-      4: {
-        zh: "先做最烂的版本出来！先完成，再完美！",
-        en: "MAKE A TERRIBLE DRAFT FIRST! DONE IS BETTER THAN PERFECT!"
+      {
+        img: "stamp-muki-4.png",
+        title: "PLAN FIRST, DO LATER",
+        sub: "Make a quick plan before stepping in!"
       },
-      5: {
-        zh: "倒数 3、2、1，像发射火箭一样立刻站起来！",
-        en: "COUNTDOWN 3, 2, 1, STAND UP LIKE A ROCKET LAUNCH!"
+      {
+        img: "stamp-muki-5.png",
+        title: "REST 30 MINS",
+        sub: "Take a 30-minute break then start!"
       },
-      6: {
-        zh: "天选 6 号！别犹豫了，现在就去把它干掉！！",
-        en: "LUCKY SIX! STOP THINKING AND DO IT RIGHT NOW!!"
+      {
+        img: "stamp-muki-6.png",
+        title: "FIND A BUDDY!",
+        sub: "Get a friend to supervise you!"
       }
-    };
+    ];
 
     /* ========================================================
-       摇骰子动画与随机数逻辑
+       物理盖章逻辑与动画触发
        ======================================================== */
-    let isRolling = false;
+    let isStamping = false;
 
-    function rollDice() {
-      if (isRolling) return;
-      isRolling = true;
+    function pressStamp() {
+      if (isStamping) return;
+      isStamping = true;
 
-      const diceDisplay = document.getElementById('diceDisplay');
-      const zhDisplay = document.getElementById('zhDisplay');
-      const enDisplay = document.getElementById('enDisplay');
+      const stampArea = document.getElementById('stampArea');
+      const stampMark = document.getElementById('stampMark');
+      const enTitle = document.getElementById('enTitle');
+      const subText = document.getElementById('subText');
 
-      // 触发摇动动画
-      diceDisplay.classList.remove('rolling');
-      void diceDisplay.offsetWidth; // 触发 reflow
-      diceDisplay.classList.add('rolling');
+      // 触发印章手柄“按压”动画
+      stampArea.classList.remove('pressing');
+      void stampArea.offsetWidth; // 触发 reflow
+      stampArea.classList.add('pressing');
 
-      const duration = 1500;   // 1.5 秒动画
-      const intervalTime = 70; // 快速变动数字
-      let elapsedTime = 0;
+      // 0.15 秒手柄压下时，更换印章结果
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * actionStamps.length);
+        const selected = actionStamps[randomIndex];
 
-      const timer = setInterval(() => {
-        const tempNum = Math.floor(Math.random() * 6) + 1;
-        diceDisplay.textContent = tempNum;
+        stampMark.src = selected.img;
+        enTitle.textContent = selected.title;
+        subText.textContent = selected.sub;
 
-        elapsedTime += intervalTime;
+        // 触发落印弹出动画
+        stampMark.classList.remove('pop');
+        void stampMark.offsetWidth;
+        stampMark.classList.add('pop');
+      }, 150);
 
-        if (elapsedTime >= duration) {
-          clearInterval(timer);
-          
-          // 确定最终落点
-          const finalNum = Math.floor(Math.random() * 6) + 1;
-          diceDisplay.textContent = finalNum;
-          zhDisplay.textContent = diceDecisions[finalNum].zh;
-          enDisplay.textContent = diceDecisions[finalNum].en;
-
-          isRolling = false;
-        }
-      }, intervalTime);
+      setTimeout(() => {
+        isStamping = false;
+      }, 400);
     }
   </script>
 </body>
