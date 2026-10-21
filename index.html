@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>MUKICHIP V2: DAILY SOLVER - ACTION</title>
+  <title>MUKICHIP V2: DAILY SOLVER</title>
 
   <!-- Google Fonts: Bagel Fat One & Cursive/Handwritten Chinese Fallbacks -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +30,7 @@
       --font-chinese: 'LiyuShoushu', 'Ma Shan Zheng', 'Long Cang', 'ZCOOL KuaiLe', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -107,7 +107,7 @@
       font-weight: 400;
       color: var(--color-brown);
       text-align: center;
-      letter-spacing: 0.6px;
+      letter-spacing: 5px; /* 增加了间距 */
       text-transform: uppercase;
       margin-top: 18px;
       margin-bottom: 14px;
@@ -146,12 +146,12 @@
       transition: opacity 0.25s ease;
     }
 
-    /* Stamped ink mark */
+    /* Stamped ink mark (放大 40%) */
     .stamp-mark {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 63%;
+      width: 88%; 
       height: auto;
       transform: translate(-50%, -50%) scale(0);
       pointer-events: none;
@@ -211,7 +211,7 @@
       font-size: clamp(17px, 4.7vw, 21px);
       color: var(--color-brown);
       text-align: center;
-      letter-spacing: 0.5px;
+      letter-spacing: 5px; /* 增加了间距 */
       line-height: 1.25;
       text-transform: uppercase;
       transition: transform 0.22s ease, opacity 0.22s ease;
@@ -260,8 +260,8 @@
     }
 
     .ig-stamp-img {
-      width: 95px;
-      height: 95px;
+      width: 110px; /* 放大 15% 后的大小 (95px * 1.15 ≈ 110px) */
+      height: 110px;
       display: block;
       object-fit: contain;
       user-select: none;
@@ -299,10 +299,10 @@
       <img src="Action_Stamp1.png" alt="Action Stamp" class="stamp-mark" id="stampMark">
     </section>
 
-    <!-- Result Text Card Box -->
+    <!-- Result Text Card Box (Initial state: ACTION OR NOT?) -->
     <section class="text-card-box" id="textBox">
-      <div class="text-line-en" id="textLineEn">DO IT NOW!!!</div>
-      <div class="text-line-zh" id="textLineZh">立刻去干!!!</div>
+      <div class="text-line-en" id="textLineEn">ACTION OR NOT?</div>
+      <div class="text-line-zh" id="textLineZh">做还是不做？</div>
     </section>
 
     <!-- IG Stamp Link at the Bottom -->
