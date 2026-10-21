@@ -1,479 +1,480 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>MUKICHIP V2: DAILY SOLVER</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>MUKICHIP V2: DAILY SOLVER</title>
 
-  <!-- Google Fonts: Bagel Fat One & Cursive/Handwritten Chinese Fallbacks -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Long+Cang&family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<!-- Google Fonts: Bagel Fat One & Cursive/Handwritten Chinese Fallbacks -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Long+Cang&family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 
-  <style>
-    /* =========================================================
-       Font Definitions & Design Tokens
-       ========================================================= */
-    @font-face {
-      font-family: 'LiyuShoushu';
-      src: url('LiyuShoushu.ttf') format('truetype'),
-           url('Liyu Shoushu.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
+<style>
+/* =========================================================
+Font Definitions & Design Tokens
+========================================================= */
+@font-face {
+font-family: 'LiyuShoushu';
+src: url('LiyuShoushu.ttf') format('truetype'),
+url('Liyu Shoushu.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+font-display: swap;
+}
 
-    :root {
-      --color-brown: #9B644F;
-      --color-bg: #FFFFFF;
-      --font-bagel: 'Bagel Fat One', cursive, system-ui, sans-serif;
-      --font-chinese: 'LiyuShoushu', 'Ma Shan Zheng', 'Long Cang', 'ZCOOL KuaiLe', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-    }
+:root {
+--color-brown: #9B644F;
+--color-bg: #FFFFFF;
+--font-bagel: 'Bagel Fat One', cursive, system-ui, sans-serif;
+--font-chinese: 'LiyuShoushu', 'Ma Shan Zheng', 'Long Cang', 'ZCOOL KuaiLe', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+*, *::before, *::after {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+-webkit-tap-highlight-color: transparent;
+}
 
-    html, body {
-      width: 100%;
-      min-height: 100vh;
-      background-color: var(--color-bg);
-      color: var(--color-brown);
-      font-family: var(--font-bagel);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      overflow-x: hidden;
-      touch-action: manipulation;
-    }
+html, body {
+width: 100%;
+min-height: 100vh;
+background-color: var(--color-bg);
+color: var(--color-brown);
+font-family: var(--font-bagel);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
+overflow-x: hidden;
+touch-action: manipulation;
+}
 
-    /* Outer wrapper for mobile & desktop centering */
-    .app-viewport {
-      width: 100%;
-      max-width: 440px;
-      margin: 0 auto;
-      padding: 24px 20px 48px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-    }
+/* Outer wrapper for mobile & desktop centering */
+.app-viewport {
+width: 100%;
+max-width: 440px;
+margin: 0 auto;
+padding: 24px 20px 48px;
+display: flex;
+flex-direction: column;
+align-items: center;
+position: relative;
+}
 
-    /* =========================================================
-       1. Top Illustration Area
-       ========================================================= */
-    .top-artwork-container {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      margin-bottom: 0;
-    }
+/* =========================================================
+1. Top Illustration Area
+========================================================= */
+.top-artwork-container {
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+position: relative;
+margin-bottom: 0;
+}
 
-    .top-artwork-img {
-      width: 78%;
-      max-width: 310px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      user-select: none;
-      -webkit-user-drag: none;
-      pointer-events: none;
-    }
+.top-artwork-img {
+width: 78%;
+max-width: 310px;
+height: auto;
+display: block;
+margin: 0 auto;
+user-select: none;
+-webkit-user-drag: none;
+pointer-events: none;
+}
 
-    /* Thick divider line with rounded caps directly connected */
-    .divider-line {
-      width: 88%;
-      max-width: 350px;
-      height: 4px;
-      background-color: var(--color-brown);
-      border-radius: 9999px;
-      margin: -1px auto 0;
-      position: relative;
-      z-index: 2;
-    }
+/* Thick divider line with rounded caps directly connected */
+.divider-line {
+width: 88%;
+max-width: 350px;
+height: 4px;
+background-color: var(--color-brown);
+border-radius: 9999px;
+margin: -1px auto 0;
+position: relative;
+z-index: 2;
+}
 
-    /* =========================================================
-       2. Topic Header
-       ========================================================= */
-    .topic-title {
-      font-family: var(--font-bagel);
-      font-size: clamp(17px, 4.8vw, 21px);
-      font-weight: 400;
-      color: var(--color-brown);
-      text-align: center;
-      letter-spacing: 5px; /* 增加了间距 */
-      text-transform: uppercase;
-      margin-top: 18px;
-      margin-bottom: 14px;
-      user-select: none;
-    }
+/* =========================================================
+2. Topic Header
+========================================================= */
+.topic-title {
+font-family: var(--font-bagel);
+font-size: clamp(17px, 4.8vw, 21px);
+font-weight: 400;
+color: var(--color-brown);
+text-align: center;
+letter-spacing: 0.6px;
+text-transform: uppercase;
+margin-top: 18px;
+margin-bottom: 14px;
+user-select: none;
+}
 
-    /* =========================================================
-       3. Stamp Paper Area
-       ========================================================= */
-    .stamp-stage {
-      width: 88%;
-      max-width: 350px;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-drag: none;
-      transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+/* =========================================================
+3. Stamp Paper Area
+========================================================= */
+.stamp-stage {
+width: 88%;
+max-width: 350px;
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+user-select: none;
+-webkit-user-drag: none;
+transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-    .stamp-stage:active {
-      transform: scale(0.972);
-    }
+.stamp-stage:active {
+transform: scale(0.972);
+}
 
-    /* Paper background image */
-    .stamp-paper-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-drag: none;
-      filter: drop-shadow(0 4px 12px rgba(155, 100, 79, 0.08));
-      transition: opacity 0.25s ease;
-    }
+/* Paper background image */
+.stamp-paper-img {
+width: 100%;
+height: auto;
+display: block;
+pointer-events: none;
+user-select: none;
+-webkit-user-drag: none;
+filter: drop-shadow(0 4px 12px rgba(155, 100, 79, 0.08));
+transition: opacity 0.25s ease;
+}
 
-    /* Stamped ink mark (放大 40%) */
-    .stamp-mark {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 88%; 
-      height: auto;
-      transform: translate(-50%, -50%) scale(0);
-      pointer-events: none;
-      opacity: 0;
-      user-select: none;
-      -webkit-user-drag: none;
-      transform-origin: center center;
-    }
+/* Stamped ink mark (Enlarged 40%: width 63% -> 88%) */
+.stamp-mark {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 88%;
+height: auto;
+transform: translate(-50%, -50%) scale(0);
+pointer-events: none;
+opacity: 0;
+user-select: none;
+-webkit-user-drag: none;
+transform-origin: center center;
+}
 
-    /* Stamp landing animation */
-    .stamp-mark.stamped {
-      opacity: 0.94;
-      animation: stampDrop 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
+/* Stamp landing animation */
+.stamp-mark.stamped {
+opacity: 0.94;
+animation: stampDrop 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
 
-    @keyframes stampDrop {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.6) rotate(var(--stamp-angle, 0deg));
-      }
-      50% {
-        opacity: 0.98;
-        transform: translate(-50%, -50%) scale(0.92) rotate(var(--stamp-angle, 0deg));
-      }
-      75% {
-        transform: translate(-50%, -50%) scale(1.04) rotate(var(--stamp-angle, 0deg));
-      }
-      100% {
-        opacity: 0.94;
-        transform: translate(-50%, -50%) scale(1) rotate(var(--stamp-angle, 0deg));
-      }
-    }
+@keyframes stampDrop {
+0% {
+opacity: 0;
+transform: translate(-50%, -50%) scale(1.6) rotate(var(--stamp-angle, 0deg));
+}
+50% {
+opacity: 0.98;
+transform: translate(-50%, -50%) scale(0.92) rotate(var(--stamp-angle, 0deg));
+}
+75% {
+transform: translate(-50%, -50%) scale(1.04) rotate(var(--stamp-angle, 0deg));
+}
+100% {
+opacity: 0.94;
+transform: translate(-50%, -50%) scale(1) rotate(var(--stamp-angle, 0deg));
+}
+}
 
-    /* =========================================================
-       4. Text Card Box
-       ========================================================= */
-    .text-card-box {
-      width: 88%;
-      max-width: 350px;
-      margin-top: 18px;
-      padding: 16px 14px;
-      background: #FFFFFF;
-      border: 3px solid var(--color-brown);
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      box-shadow: 0 4px 14px rgba(155, 100, 79, 0.05);
-      user-select: none;
-      min-height: 84px;
-    }
+/* =========================================================
+4. Text Card Box
+========================================================= */
+.text-card-box {
+width: 88%;
+max-width: 350px;
+margin-top: 18px;
+padding: 16px 14px;
+background: #FFFFFF;
+border: 3px solid var(--color-brown);
+border-radius: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 6px;
+box-shadow: 0 4px 14px rgba(155, 100, 79, 0.05);
+user-select: none;
+min-height: 84px;
+}
 
-    .text-line-en {
-      font-family: var(--font-bagel);
-      font-size: clamp(17px, 4.7vw, 21px);
-      color: var(--color-brown);
-      text-align: center;
-      letter-spacing: 5px; /* 增加了间距 */
-      line-height: 1.25;
-      text-transform: uppercase;
-      transition: transform 0.22s ease, opacity 0.22s ease;
-    }
+.text-line-en {
+font-family: var(--font-bagel);
+font-size: clamp(17px, 4.7vw, 21px);
+color: var(--color-brown);
+text-align: center;
+letter-spacing: 0.5px;
+line-height: 1.25;
+text-transform: uppercase;
+transition: transform 0.22s ease, opacity 0.22s ease;
+}
 
-    .text-line-zh {
-      font-family: var(--font-chinese);
-      font-size: clamp(21px, 6vw, 27px);
-      font-weight: normal;
-      color: var(--color-brown);
-      text-align: center;
-      letter-spacing: 1.5px;
-      line-height: 1.2;
-      transition: transform 0.22s ease, opacity 0.22s ease;
-    }
+.text-line-zh {
+font-family: var(--font-chinese);
+font-size: clamp(21px, 6vw, 27px);
+font-weight: normal;
+color: var(--color-brown);
+text-align: center;
+letter-spacing: 1.5px;
+line-height: 1.2;
+transition: transform 0.22s ease, opacity 0.22s ease;
+}
 
-    .text-updating {
-      opacity: 0;
-      transform: scale(0.92);
-    }
+.text-updating {
+opacity: 0;
+transform: scale(0.92);
+}
 
-    /* =========================================================
-       5. Instagram Stamp Button
-       ========================================================= */
-    .ig-stamp-container {
-      margin-top: 28px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+/* =========================================================
+5. Instagram Stamp Button
+========================================================= */
+.ig-stamp-container {
+margin-top: 28px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
 
-    .ig-stamp-link {
-      display: inline-block;
-      text-decoration: none;
-      outline: none;
-      cursor: pointer;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+.ig-stamp-link {
+display: inline-block;
+text-decoration: none;
+outline: none;
+cursor: pointer;
+transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-    .ig-stamp-link:hover {
-      transform: scale(1.08) rotate(2deg);
-    }
+.ig-stamp-link:hover {
+transform: scale(1.08) rotate(2deg);
+}
 
-    .ig-stamp-link:active {
-      transform: scale(0.94);
-    }
+.ig-stamp-link:active {
+transform: scale(0.94);
+}
 
-    .ig-stamp-img {
-      width: 110px; /* 放大 15% 后的大小 (95px * 1.15 ≈ 110px) */
-      height: 110px;
-      display: block;
-      object-fit: contain;
-      user-select: none;
-      -webkit-user-drag: none;
-      filter: drop-shadow(0 3px 8px rgba(155, 100, 79, 0.12));
-    }
+/* Enlarged 15%: 95px * 1.15 = ~109px */
+.ig-stamp-img {
+width: 109px;
+height: 109px;
+display: block;
+object-fit: contain;
+user-select: none;
+-webkit-user-drag: none;
+filter: drop-shadow(0 3px 8px rgba(155, 100, 79, 0.12));
+}
 
-    /* Accessibility focus */
-    .stamp-stage:focus-visible,
-    .ig-stamp-link:focus-visible {
-      outline: 2px dashed var(--color-brown);
-      outline-offset: 4px;
-    }
-  </style>
+/* Accessibility focus */
+.stamp-stage:focus-visible,
+.ig-stamp-link:focus-visible {
+outline: 2px dashed var(--color-brown);
+outline-offset: 4px;
+}
+</style>
 </head>
 <body>
 
-  <main class="app-viewport">
+<main class="app-viewport">
 
-    <!-- Top Artwork & Rounded Divider Line -->
-    <header class="top-artwork-container">
-      <img src="top-action.png" alt="Too much things" class="top-artwork-img" id="topArtwork">
-      <div class="divider-line" aria-hidden="true"></div>
-    </header>
+<!-- Top Artwork & Rounded Divider Line -->
+<header class="top-artwork-container">
+<img src="top-action.png" alt="Too much things" class="top-artwork-img" id="topArtwork">
+<div class="divider-line" aria-hidden="true"></div>
+</header>
 
-    <!-- Topic Header -->
-    <h1 class="topic-title">MUKICHIP V2: DAILY SOLVER</h1>
+<!-- Topic Header -->
+<h1 class="topic-title">MUKICHIP V2: DAILY SOLVER</h1>
 
-    <!-- Stamp Paper Stage (Interactive Clickable Area) -->
-    <section class="stamp-stage" id="stampStage" role="button" tabindex="0" aria-label="盖印章 - 点击盖章">
-      <!-- Paper image switches from stamp-paper-font.png to stamp-paper.png on tap -->
-      <img src="stamp-paper-font.png" alt="Stamp Paper" class="stamp-paper-img" id="stampPaperImg">
-      
-      <!-- Stamped Mark (Appears upon stamping) -->
-      <img src="Action_Stamp1.png" alt="Action Stamp" class="stamp-mark" id="stampMark">
-    </section>
+<!-- Stamp Paper Stage (Interactive Clickable Area) -->
+<section class="stamp-stage" id="stampStage" role="button" tabindex="0" aria-label="盖印章 - 点击盖章">
+<!-- Paper image switches from stamp-paper-font.png to stamp-paper.png on tap -->
+<img src="stamp-paper-font.png" alt="Stamp Paper" class="stamp-paper-img" id="stampPaperImg">
 
-    <!-- Result Text Card Box (Initial state: ACTION OR NOT?) -->
-    <section class="text-card-box" id="textBox">
-      <div class="text-line-en" id="textLineEn">ACTION OR NOT?</div>
-      <div class="text-line-zh" id="textLineZh">做还是不做？</div>
-    </section>
+<!-- Stamped Mark (Appears upon stamping) -->
+<img src="Action_Stamp1.png" alt="Action Stamp" class="stamp-mark" id="stampMark">
+</section>
 
-    <!-- IG Stamp Link at the Bottom -->
-    <footer class="ig-stamp-container">
-      <a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="ig-stamp-link" aria-label="Visit Instagram @yuxuantsuki">
-        <img src="ig-stamp.png" alt="@yuxuantsuki" class="ig-stamp-img">
-      </a>
-    </footer>
+<!-- Result Text Card Box (Default: ACTION OR NOT? / 做还是不做？) -->
+<section class="text-card-box" id="textBox">
+<div class="text-line-en" id="textLineEn">ACTION OR NOT?</div>
+<div class="text-line-zh" id="textLineZh">做还是不做？</div>
+</section>
 
-  </main>
+<!-- IG Stamp Link at the Bottom -->
+<footer class="ig-stamp-container">
+<a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="ig-stamp-link" aria-label="Visit Instagram @yuxuantsuki">
+<img src="ig-stamp.png" alt="@yuxuantsuki" class="ig-stamp-img">
+</a>
+</footer>
 
-  <script>
-    /* =========================================================
-       Stamp Data & Logic
-       ========================================================= */
-    const STAMP_LIST = [
-      {
-        id: 1,
-        image: 'Action_Stamp1.png',
-        en: 'DO IT NOW!!!',
-        zh: '立刻去干!!!'
-      },
-      {
-        id: 2,
-        image: 'Action_Stamp2.png',
-        en: 'REWARD YOURSELF AFTER',
-        zh: '搞定后奖励自己'
-      },
-      {
-        id: 3,
-        image: 'Action_Stamp3.png',
-        en: 'STAMP AGAIN ~',
-        zh: '再盖一次～'
-      },
-      {
-        id: 4,
-        image: 'Action_Stamp4.png',
-        en: 'NO PROCRASTINATION !',
-        zh: '拒绝拖延！'
-      },
-      {
-        id: 5,
-        image: 'Action_Stamp5.png',
-        en: 'REJECTED: REST NOW',
-        zh: '驳回：立刻休息'
-      },
-      {
-        id: 6,
-        image: 'Action_Stamp6.png',
-        en: 'SLEEP ON IT',
-        zh: '睡醒再说吧'
-      }
-    ];
+</main>
 
-    // DOM Elements
-    const stampStage = document.getElementById('stampStage');
-    const stampPaperImg = document.getElementById('stampPaperImg');
-    const stampMark = document.getElementById('stampMark');
-    const textLineEn = document.getElementById('textLineEn');
-    const textLineZh = document.getElementById('textLineZh');
+<script>
+/* =========================================================
+Stamp Data & Logic
+========================================================= */
+const STAMP_LIST = [
+{
+id: 1,
+image: 'Action_Stamp1.png',
+en: 'DO IT NOW!!!',
+zh: '立刻去干!!!'
+},
+{
+id: 2,
+image: 'Action_Stamp2.png',
+en: 'REWARD YOURSELF AFTER',
+zh: '搞定后奖励自己'
+},
+{
+id: 3,
+image: 'Action_Stamp3.png',
+en: 'STAMP AGAIN ~',
+zh: '再盖一次～'
+},
+{
+id: 4,
+image: 'Action_Stamp4.png',
+en: 'NO PROCRASTINATION !',
+zh: '拒绝拖延！'
+},
+{
+id: 5,
+image: 'Action_Stamp5.png',
+en: 'REJECTED: REST NOW',
+zh: '驳回：立刻休息'
+},
+{
+id: 6,
+image: 'Action_Stamp6.png',
+en: 'SLEEP ON IT',
+zh: '睡醒再说吧'
+}
+];
 
-    let currentStampIndex = -1;
-    let hasStampedOnce = false;
-    let isStamping = false;
+// DOM Elements
+const stampStage = document.getElementById('stampStage');
+const stampPaperImg = document.getElementById('stampPaperImg');
+const stampMark = document.getElementById('stampMark');
+const textLineEn = document.getElementById('textLineEn');
+const textLineZh = document.getElementById('textLineZh');
 
-    // Preload blank paper and all stamp images for zero latency
-    function preloadAssets() {
-      const blankPaper = new Image();
-      blankPaper.src = 'stamp-paper.png';
+let currentStampIndex = -1;
+let hasStampedOnce = false;
+let isStamping = false;
 
-      STAMP_LIST.forEach(item => {
-        const img = new Image();
-        img.src = item.image;
-      });
-    }
-    preloadAssets();
+// Preload blank paper and all stamp images for zero latency
+function preloadAssets() {
+const blankPaper = new Image();
+blankPaper.src = 'stamp-paper.png';
 
-    /* =========================================================
-       Tactile Stamp Audio Sound (Web Audio API)
-       Soft organic thump sound effect when stamping
-       ========================================================= */
-    function playTactileStampSound() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
-        
-        // Low thump frequency oscillator
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(140, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(36, ctx.currentTime + 0.12);
-        
-        gain.gain.setValueAtTime(0.4, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-        
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        
-        osc.start();
-        osc.stop(ctx.currentTime + 0.13);
-      } catch (err) {
-        // Audio policy or unsupported: fail silently
-      }
-    }
+STAMP_LIST.forEach(item => {
+const img = new Image();
+img.src = item.image;
+});
+}
+preloadAssets();
 
-    /* =========================================================
-       Execute Stamp Action
-       ========================================================= */
-    function doStamp() {
-      if (isStamping) return;
-      isStamping = true;
+/* =========================================================
+Tactile Stamp Audio Sound (Web Audio API)
+Soft organic thump sound effect when stamping
+========================================================= */
+function playTactileStampSound() {
+try {
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+if (!AudioCtx) return;
+const ctx = new AudioCtx();
 
-      // Play sound & haptic vibration if supported
-      playTactileStampSound();
-      if (navigator.vibrate) {
-        navigator.vibrate(40);
-      }
+// Low thump frequency oscillator
+const osc = ctx.createOscillator();
+const gain = ctx.createGain();
 
-      // Switch to blank paper image
-      if (!hasStampedOnce) {
-        stampPaperImg.src = 'stamp-paper.png';
-        hasStampedOnce = true;
-      }
+osc.type = 'triangle';
+osc.frequency.setValueAtTime(140, ctx.currentTime);
+osc.frequency.exponentialRampToValueAtTime(36, ctx.currentTime + 0.12);
 
-      // Pick a random stamp (prefer different from current)
-      let nextIndex;
-      if (currentStampIndex === -1) {
-        nextIndex = Math.floor(Math.random() * STAMP_LIST.length);
-      } else {
-        do {
-          nextIndex = Math.floor(Math.random() * STAMP_LIST.length);
-        } while (STAMP_LIST.length > 1 && nextIndex === currentStampIndex);
-      }
-      currentStampIndex = nextIndex;
-      const selected = STAMP_LIST[currentStampIndex];
+gain.gain.setValueAtTime(0.4, ctx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
 
-      // Random micro-angle (-1.8deg to +1.8deg) for natural ink stamp feel
-      const randomAngle = (Math.random() * 3.6 - 1.8).toFixed(1) + 'deg';
-      stampMark.style.setProperty('--stamp-angle', randomAngle);
+osc.connect(gain);
+gain.connect(ctx.destination);
 
-      // Trigger stamp landing animation
-      stampMark.classList.remove('stamped');
-      stampMark.src = selected.image;
-      // Force DOM reflow to replay CSS keyframe animation
-      void stampMark.offsetWidth;
-      stampMark.classList.add('stamped');
+osc.start();
+osc.stop(ctx.currentTime + 0.13);
+} catch (err) {
+// Audio policy or unsupported: fail silently
+}
+}
 
-      // Update text card box with smooth transition
-      textLineEn.classList.add('text-updating');
-      textLineZh.classList.add('text-updating');
+/* =========================================================
+Execute Stamp Action
+========================================================= */
+function doStamp() {
+if (isStamping) return;
+isStamping = true;
 
-      setTimeout(() => {
-        textLineEn.textContent = selected.en;
-        textLineZh.textContent = selected.zh;
-        textLineEn.classList.remove('text-updating');
-        textLineZh.classList.remove('text-updating');
-        isStamping = false;
-      }, 160);
-    }
+// Play sound & haptic vibration if supported
+playTactileStampSound();
+if (navigator.vibrate) {
+navigator.vibrate(40);
+}
 
-    // Event Listeners
-    stampStage.addEventListener('click', doStamp);
-    stampStage.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        doStamp();
-      }
-    });
-  </script>
+// Switch to blank paper image
+if (!hasStampedOnce) {
+stampPaperImg.src = 'stamp-paper.png';
+hasStampedOnce = true;
+}
+
+// Pick a random stamp (prefer different from current)
+let nextIndex;
+if (currentStampIndex === -1) {
+nextIndex = Math.floor(Math.random() * STAMP_LIST.length);
+} else {
+do {
+nextIndex = Math.floor(Math.random() * STAMP_LIST.length);
+} while (STAMP_LIST.length > 1 && nextIndex === currentStampIndex);
+}
+currentStampIndex = nextIndex;
+const selected = STAMP_LIST[currentStampIndex];
+
+// Random micro-angle (-1.8deg to +1.8deg) for natural ink stamp feel
+const randomAngle = (Math.random() * 3.6 - 1.8).toFixed(1) + 'deg';
+stampMark.style.setProperty('--stamp-angle', randomAngle);
+
+// Trigger stamp landing animation
+stampMark.classList.remove('stamped');
+stampMark.src = selected.image;
+// Force DOM reflow to replay CSS keyframe animation
+void stampMark.offsetWidth;
+stampMark.classList.add('stamped');
+
+// Update text card box with smooth transition
+textLineEn.classList.add('text-updating');
+textLineZh.classList.add('text-updating');
+
+setTimeout(() => {
+textLineEn.textContent = selected.en;
+textLineZh.textContent = selected.zh;
+textLineEn.classList.remove('text-updating');
+textLineZh.classList.remove('text-updating');
+isStamping = false;
+}, 160);
+}
+
+// Event Listeners
+stampStage.addEventListener('click', doStamp);
+stampStage.addEventListener('keydown', (e) => {
+if (e.key === 'Enter' || e.key === ' ') {
+e.preventDefault();
+doStamp();
+}
+});
+</script>
 </body>
 </html>
