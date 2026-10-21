@@ -1,30 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MUKICHIP V2: DAILY SOLVER - ACTION</title>
-  
-  <!-- 引入 Google Fonts: Bagel Fat One Regular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>MUKICHIP V2: DAILY SOLVER</title>
+
+  <!-- Google Fonts: Bagel Fat One & Cursive/Handwritten Chinese Fallbacks -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Long+Cang&family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+
   <style>
-    /* 引入 GitHub 仓库同目录下的 LiyuShoushu.ttf 字体文件 */
+    /* =========================================================
+       Font Definitions & Design Tokens
+       ========================================================= */
     @font-face {
-      font-family: 'Liyu Shoushu';
-      src: url('LiyuShoushu.ttf') format('truetype');
+      font-family: 'LiyuShoushu';
+      src: url('LiyuShoushu.ttf') format('truetype'),
+           url('Liyu Shoushu.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
+      font-display: swap;
     }
 
-    /* 全局配色变量 */
     :root {
-      --bg-color: #ffffff;        /* 整体背景：纯白 */
-      --main-brown: #926653;      /* 褐色 */
-      --accent-orange: #EEA445;   /* 橙色 */
-      --card-bg: #F8F6F3;        /* 展示卡片背景 */
+      --color-brown: #9B644F;
+      --color-bg: #FFFFFF;
+      --font-bagel: 'Bagel Fat One', cursive, system-ui, sans-serif;
+      --font-chinese: 'LiyuShoushu', 'Ma Shan Zheng', 'Long Cang', 'ZCOOL KuaiLe', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
     }
 
     * {
@@ -34,327 +37,443 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
-      background-color: var(--bg-color);
-      font-family: system-ui, -apple-system, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+    html, body {
+      width: 100%;
       min-height: 100vh;
-      padding: 20px 20px 60px;
-      color: var(--main-brown);
+      background-color: var(--color-bg);
+      color: var(--color-brown);
+      font-family: var(--font-bagel);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       overflow-x: hidden;
+      touch-action: manipulation;
     }
 
-    /* 手机端主容器 */
-    .mobile-container {
+    /* Outer wrapper for mobile & desktop centering */
+    .app-viewport {
       width: 100%;
-      max-width: 340px;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
     }
 
-    /* 1. 主标题 (Bagel Fat One Regular, 字间距 +50) */
-    .main-title {
-      font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 20px;
-      color: var(--main-brown);
-      letter-spacing: 0.05em; /* 字间距 +50 */
-      text-transform: uppercase;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    /* 2. 盖印章按压互动区 */
-    .stamp-interactive-area {
+    /* =========================================================
+       1. Top Illustration Area
+       ========================================================= */
+    .top-artwork-container {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 15px;
-      cursor: pointer;
+      position: relative;
+      margin-bottom: 0;
     }
 
-    .stamp-handle-img {
-      width: 90px;
+    .top-artwork-img {
+      width: 78%;
+      max-width: 310px;
       height: auto;
       display: block;
-      transition: transform 0.1s ease;
+      margin: 0 auto;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    /* Thick divider line with rounded caps directly connected */
+    .divider-line {
+      width: 88%;
+      max-width: 350px;
+      height: 4px;
+      background-color: var(--color-brown);
+      border-radius: 9999px;
+      margin: -1px auto 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* =========================================================
+       2. Topic Header
+       ========================================================= */
+    .topic-title {
+      font-family: var(--font-bagel);
+      font-size: clamp(17px, 4.8vw, 21px);
+      font-weight: 400;
+      color: var(--color-brown);
+      text-align: center;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-top: 18px;
+      margin-bottom: 14px;
       user-select: none;
     }
 
-    /* 点击按压“啪嗒”动画 */
-    .stamp-interactive-area.pressing .stamp-handle-img {
-      animation: stampPress 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes stampPress {
-      0% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(12px) scale(0.85) rotate(-3deg); }
-      100% { transform: translateY(0) scale(1); }
-    }
-
-    /* 3. Action 展示卡片 */
-    .action-card {
-      width: 100%;
-      background-color: var(--card-bg);
-      border-radius: 20px;
-      padding: 20px 18px 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* =========================================================
+       3. Stamp Paper Area
+       ========================================================= */
+    .stamp-stage {
+      width: 88%;
+      max-width: 350px;
       position: relative;
-      overflow: hidden;
-    }
-
-    /* 细线分割线 */
-    .divider-line {
-      width: 100%;
-      height: 1px;
-      background-color: var(--accent-orange);
-      margin: 6px 0;
-      opacity: 0.5;
-    }
-
-    /* TO DO OR NOT TO DO? (靠左对齐，Liyu Shoushu 字体) */
-    .question-prompt {
-      width: 100%;
-      font-family: 'Liyu Shoushu', cursive, sans-serif;
-      font-size: 14px;
-      color: var(--main-brown);
-      letter-spacing: 0.05em;
-      margin: 2px 0;
-      text-transform: uppercase;
-      text-align: left;
-      padding: 0 8px;
-    }
-
-    /* 4. 印章落印显示区 (靠左对齐) */
-    .stamp-result-container {
-      width: 100%;
-      padding: 12px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-      min-height: 120px;
-      position: relative;
-    }
-
-    /* 盖下的 Muki 印章 PNG */
-    .muki-stamp-mark {
-      width: 110px;
-      height: auto;
-      margin-bottom: 8px;
-      display: block;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .muki-stamp-mark.pop {
-      animation: stampPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes stampPop {
-      0% { transform: scale(2) rotate(-10deg); opacity: 0; }
-      100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-
-    /* 英文主文案 (大字，Bagel Fat One Regular) */
-    .en-stamp-title {
-      width: 100%;
-      font-family: 'Bagel Fat One', cursive, sans-serif;
-      color: var(--accent-orange);
-      font-size: 20px;
-      letter-spacing: 0.05em;
-      line-height: 1.2;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      text-align: left;
-    }
-
-    /* 英文描述/中文辅助 (小字，Liyu Shoushu 字体) */
-    .sub-text {
-      width: 100%;
-      font-family: 'Liyu Shoushu', cursive, sans-serif;
-      color: var(--main-brown);
-      font-size: 13px;
-      line-height: 1.35;
-      text-transform: uppercase;
-      word-break: break-word;
-      text-align: left;
-    }
-
-    /* 5. 底部 Muki 插图 + IG 印章 */
-    .muki-bottom-wrapper {
-      width: 100%;
       display: flex;
       justify-content: center;
-      margin-top: 15px;
-      position: relative;
-    }
-
-    .muki-bottom-img {
-      width: 100%;
-      max-width: 240px;
-      height: auto;
-      display: block;
-    }
-
-    /* IG 印章按钮 */
-    .stamp-link {
-      position: absolute;
-      bottom: -10px;
-      right: 5px;
-      text-decoration: none;
-      z-index: 10;
-      transition: transform 0.15s ease;
-    }
-
-    .stamp-link:active {
-      transform: scale(0.8);
-    }
-
-    .stamp-img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      display: block;
-    }
-
-    /* 底部提示语 */
-    .tap-tip {
-      font-family: 'Bagel Fat One', cursive, sans-serif;
-      font-size: 12px;
-      color: var(--main-brown);
-      letter-spacing: 0.05em; /* 字间距 +50 */
-      margin-top: 22px;
-      opacity: 0.5;
+      align-items: center;
       cursor: pointer;
       user-select: none;
+      -webkit-user-drag: none;
+      transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .stamp-stage:active {
+      transform: scale(0.972);
+    }
+
+    /* Paper background image */
+    .stamp-paper-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: drop-shadow(0 4px 12px rgba(155, 100, 79, 0.08));
+      transition: opacity 0.25s ease;
+    }
+
+    /* Stamped ink mark */
+    .stamp-mark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 63%;
+      height: auto;
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      opacity: 0;
+      user-select: none;
+      -webkit-user-drag: none;
+      transform-origin: center center;
+    }
+
+    /* Stamp landing animation */
+    .stamp-mark.stamped {
+      opacity: 0.94;
+      animation: stampDrop 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes stampDrop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.6) rotate(var(--stamp-angle, 0deg));
+      }
+      50% {
+        opacity: 0.98;
+        transform: translate(-50%, -50%) scale(0.92) rotate(var(--stamp-angle, 0deg));
+      }
+      75% {
+        transform: translate(-50%, -50%) scale(1.04) rotate(var(--stamp-angle, 0deg));
+      }
+      100% {
+        opacity: 0.94;
+        transform: translate(-50%, -50%) scale(1) rotate(var(--stamp-angle, 0deg));
+      }
+    }
+
+    /* =========================================================
+       4. Text Card Box
+       ========================================================= */
+    .text-card-box {
+      width: 88%;
+      max-width: 350px;
+      margin-top: 18px;
+      padding: 16px 14px;
+      background: #FFFFFF;
+      border: 3px solid var(--color-brown);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(155, 100, 79, 0.05);
+      user-select: none;
+      min-height: 84px;
+    }
+
+    .text-line-en {
+      font-family: var(--font-bagel);
+      font-size: clamp(17px, 4.7vw, 21px);
+      color: var(--color-brown);
+      text-align: center;
+      letter-spacing: 0.5px;
+      line-height: 1.25;
+      text-transform: uppercase;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+
+    .text-line-zh {
+      font-family: var(--font-chinese);
+      font-size: clamp(21px, 6vw, 27px);
+      font-weight: normal;
+      color: var(--color-brown);
+      text-align: center;
+      letter-spacing: 1.5px;
+      line-height: 1.2;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+    }
+
+    .text-updating {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+
+    /* =========================================================
+       5. Instagram Stamp Button
+       ========================================================= */
+    .ig-stamp-container {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .ig-stamp-link {
+      display: inline-block;
+      text-decoration: none;
+      outline: none;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .ig-stamp-link:hover {
+      transform: scale(1.08) rotate(2deg);
+    }
+
+    .ig-stamp-link:active {
+      transform: scale(0.94);
+    }
+
+    .ig-stamp-img {
+      width: 95px;
+      height: 95px;
+      display: block;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: drop-shadow(0 3px 8px rgba(155, 100, 79, 0.12));
+    }
+
+    /* Accessibility focus */
+    .stamp-stage:focus-visible,
+    .ig-stamp-link:focus-visible {
+      outline: 2px dashed var(--color-brown);
+      outline-offset: 4px;
     }
   </style>
 </head>
 <body>
 
-  <div class="mobile-container">
-    
-    <!-- 1. 主标题 -->
-    <h1 class="main-title">MUKICHIP V2: DAILY SOLVER</h1>
+  <main class="app-viewport">
 
-    <!-- 2. 印章按压交互图 (自行替换为 stamp-handle.png) -->
-    <div class="stamp-interactive-area" id="stampArea" onclick="pressStamp()">
-      <img src="stamp-handle.png" alt="Stamp Handle" class="stamp-handle-img" id="stampHandle" onerror="this.src='https://via.placeholder.com/90x90/926653/FFFFFF?text=STAMP+PNG'">
-    </div>
+    <!-- Top Artwork & Rounded Divider Line -->
+    <header class="top-artwork-container">
+      <img src="top-action.png" alt="Too much things" class="top-artwork-img" id="topArtwork">
+      <div class="divider-line" aria-hidden="true"></div>
+    </header>
 
-    <!-- 3. Action 结果展示卡片 -->
-    <div class="action-card">
-      <div class="divider-line"></div>
-      <div class="question-prompt">TO DO OR NOT TO DO?</div>
-      <div class="divider-line"></div>
+    <!-- Topic Header -->
+    <h1 class="topic-title">MUKICHIP V2: DAILY SOLVER</h1>
 
-      <!-- 印章落印与文案展示区 (靠左对齐) -->
-      <div class="stamp-result-container">
-        <!-- 动态改变的 Muki 印章图案 (如 stamp-muki-1.png ~ stamp-muki-6.png) -->
-        <img src="stamp-muki-1.png" alt="Muki Stamp Mark" class="muki-stamp-mark" id="stampMark" onerror="this.src='https://via.placeholder.com/110x50/EEA445/FFFFFF?text=STAMP+MARK'">
-        
-        <div class="en-stamp-title" id="enTitle">DO IT NOW!!</div>
-        <div class="sub-text" id="subText">Stop thinking and do it right now!</div>
-      </div>
-    </div>
-
-    <!-- 4. 底部 Muki 插图 + IG 印章 -->
-    <div class="muki-bottom-wrapper">
-      <img src="action-muki.png" alt="Muki Illustration" class="muki-bottom-img" onerror="this.src='https://via.placeholder.com/240x110/F8F6F3/926653?text=MUKI+ILLUSTRATION'">
+    <!-- Stamp Paper Stage (Interactive Clickable Area) -->
+    <section class="stamp-stage" id="stampStage" role="button" tabindex="0" aria-label="盖印章 - 点击盖章">
+      <!-- Paper image switches from stamp-paper-font.png to stamp-paper.png on tap -->
+      <img src="stamp-paper-font.png" alt="Stamp Paper" class="stamp-paper-img" id="stampPaperImg">
       
-      <!-- Instagram 印章按钮 -->
-      <a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="stamp-link">
-        <img src="ig-stamp.png" alt="@yuxuantsuki stamp" class="stamp-img" onerror="this.src='https://via.placeholder.com/80x80/926653/FFFFFF?text=STAMP'">
+      <!-- Stamped Mark (Appears upon stamping) -->
+      <img src="Action_Stamp1.png" alt="Action Stamp" class="stamp-mark" id="stampMark">
+    </section>
+
+    <!-- Result Text Card Box -->
+    <section class="text-card-box" id="textBox">
+      <div class="text-line-en" id="textLineEn">DO IT NOW!!!</div>
+      <div class="text-line-zh" id="textLineZh">立刻去干!!!</div>
+    </section>
+
+    <!-- IG Stamp Link at the Bottom -->
+    <footer class="ig-stamp-container">
+      <a href="https://www.instagram.com/yuxuantsuki" target="_blank" rel="noopener noreferrer" class="ig-stamp-link" aria-label="Visit Instagram @yuxuantsuki">
+        <img src="ig-stamp.png" alt="@yuxuantsuki" class="ig-stamp-img">
       </a>
-    </div>
+    </footer>
 
-    <!-- 底部点击提示 -->
-    <div class="tap-tip" onclick="pressStamp()">[ 点击盖章 / STAMP HERE ]</div>
-
-  </div>
+  </main>
 
   <script>
-    /* ========================================================
-       印章数据池 (可以配置你的 6 个或更多 Muki 印章图片与英文文案)
-       ======================================================== */
-    const actionStamps = [
+    /* =========================================================
+       Stamp Data & Logic
+       ========================================================= */
+    const STAMP_LIST = [
       {
-        img: "stamp-muki-1.png",
-        title: "DO IT NOW!!",
-        sub: "Stop thinking and start right now!"
+        id: 1,
+        image: 'Action_Stamp1.png',
+        en: 'DO IT NOW!!!',
+        zh: '立刻去干!!!'
       },
       {
-        img: "stamp-muki-2.png",
-        title: "STAMP AGAIN!",
-        sub: "The universe needs a second thought."
+        id: 2,
+        image: 'Action_Stamp2.png',
+        en: 'REWARD YOURSELF AFTER',
+        zh: '搞定后奖励自己'
       },
       {
-        img: "stamp-muki-3.png",
-        title: "SLACK OFF TODAY",
-        sub: "Forgive yourself and go rest completely!"
+        id: 3,
+        image: 'Action_Stamp3.png',
+        en: 'STAMP AGAIN ~',
+        zh: '再盖一次～'
       },
       {
-        img: "stamp-muki-4.png",
-        title: "PLAN FIRST, DO LATER",
-        sub: "Make a quick plan before stepping in!"
+        id: 4,
+        image: 'Action_Stamp4.png',
+        en: 'NO PROCRASTINATION !',
+        zh: '拒绝拖延！'
       },
       {
-        img: "stamp-muki-5.png",
-        title: "REST 30 MINS",
-        sub: "Take a 30-minute break then start!"
+        id: 5,
+        image: 'Action_Stamp5.png',
+        en: 'REJECTED: REST NOW',
+        zh: '驳回：立刻休息'
       },
       {
-        img: "stamp-muki-6.png",
-        title: "FIND A BUDDY!",
-        sub: "Get a friend to supervise you!"
+        id: 6,
+        image: 'Action_Stamp6.png',
+        en: 'SLEEP ON IT',
+        zh: '睡醒再说吧'
       }
     ];
 
-    /* ========================================================
-       物理盖章逻辑与动画触发
-       ======================================================== */
+    // DOM Elements
+    const stampStage = document.getElementById('stampStage');
+    const stampPaperImg = document.getElementById('stampPaperImg');
+    const stampMark = document.getElementById('stampMark');
+    const textLineEn = document.getElementById('textLineEn');
+    const textLineZh = document.getElementById('textLineZh');
+
+    let currentStampIndex = -1;
+    let hasStampedOnce = false;
     let isStamping = false;
 
-    function pressStamp() {
+    // Preload blank paper and all stamp images for zero latency
+    function preloadAssets() {
+      const blankPaper = new Image();
+      blankPaper.src = 'stamp-paper.png';
+
+      STAMP_LIST.forEach(item => {
+        const img = new Image();
+        img.src = item.image;
+      });
+    }
+    preloadAssets();
+
+    /* =========================================================
+       Tactile Stamp Audio Sound (Web Audio API)
+       Soft organic thump sound effect when stamping
+       ========================================================= */
+    function playTactileStampSound() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        
+        // Low thump frequency oscillator
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(36, ctx.currentTime + 0.12);
+        
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.start();
+        osc.stop(ctx.currentTime + 0.13);
+      } catch (err) {
+        // Audio policy or unsupported: fail silently
+      }
+    }
+
+    /* =========================================================
+       Execute Stamp Action
+       ========================================================= */
+    function doStamp() {
       if (isStamping) return;
       isStamping = true;
 
-      const stampArea = document.getElementById('stampArea');
-      const stampMark = document.getElementById('stampMark');
-      const enTitle = document.getElementById('enTitle');
-      const subText = document.getElementById('subText');
+      // Play sound & haptic vibration if supported
+      playTactileStampSound();
+      if (navigator.vibrate) {
+        navigator.vibrate(40);
+      }
 
-      // 触发印章手柄“按压”动画
-      stampArea.classList.remove('pressing');
-      void stampArea.offsetWidth; // 触发 reflow
-      stampArea.classList.add('pressing');
+      // Switch to blank paper image
+      if (!hasStampedOnce) {
+        stampPaperImg.src = 'stamp-paper.png';
+        hasStampedOnce = true;
+      }
 
-      // 0.15 秒手柄压下时，更换印章结果
+      // Pick a random stamp (prefer different from current)
+      let nextIndex;
+      if (currentStampIndex === -1) {
+        nextIndex = Math.floor(Math.random() * STAMP_LIST.length);
+      } else {
+        do {
+          nextIndex = Math.floor(Math.random() * STAMP_LIST.length);
+        } while (STAMP_LIST.length > 1 && nextIndex === currentStampIndex);
+      }
+      currentStampIndex = nextIndex;
+      const selected = STAMP_LIST[currentStampIndex];
+
+      // Random micro-angle (-1.8deg to +1.8deg) for natural ink stamp feel
+      const randomAngle = (Math.random() * 3.6 - 1.8).toFixed(1) + 'deg';
+      stampMark.style.setProperty('--stamp-angle', randomAngle);
+
+      // Trigger stamp landing animation
+      stampMark.classList.remove('stamped');
+      stampMark.src = selected.image;
+      // Force DOM reflow to replay CSS keyframe animation
+      void stampMark.offsetWidth;
+      stampMark.classList.add('stamped');
+
+      // Update text card box with smooth transition
+      textLineEn.classList.add('text-updating');
+      textLineZh.classList.add('text-updating');
+
       setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * actionStamps.length);
-        const selected = actionStamps[randomIndex];
-
-        stampMark.src = selected.img;
-        enTitle.textContent = selected.title;
-        subText.textContent = selected.sub;
-
-        // 触发落印弹出动画
-        stampMark.classList.remove('pop');
-        void stampMark.offsetWidth;
-        stampMark.classList.add('pop');
-      }, 150);
-
-      setTimeout(() => {
+        textLineEn.textContent = selected.en;
+        textLineZh.textContent = selected.zh;
+        textLineEn.classList.remove('text-updating');
+        textLineZh.classList.remove('text-updating');
         isStamping = false;
-      }, 400);
+      }, 160);
     }
+
+    // Event Listeners
+    stampStage.addEventListener('click', doStamp);
+    stampStage.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        doStamp();
+      }
+    });
   </script>
 </body>
 </html>
